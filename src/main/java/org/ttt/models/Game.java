@@ -2,9 +2,8 @@ package org.ttt.models;
 
 import org.ttt.exceptions.InvalidBotCountException;
 import org.ttt.exceptions.InvalidPlayerCountException;
-import org.ttt.winningStrategies.WinningStrategy;
+import org.ttt.strategies.winningStrategies.WinningStrategy;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,11 +83,41 @@ public class Game {
         this.winningStrategies = winningStrategies;
     }
 
-    public static GameBuilder getGameBuilder(){
+    public static GameBuilder getGameBuilder() {
         return new GameBuilder();
     }
 
-    public static class GameBuilder{
+    //to-do
+    public boolean checkWinner(Move move) {
+        return false;
+    }
+
+    public void makeMove() {
+        //get current player
+        Player currPlayer = players.get(nextPlayerIndex);
+        System.out.println("Current Player: " + currPlayer.getName());
+        //make a move
+        Move move = currPlayer.makeMove(board);
+        //mark cell
+        Cell selectedCell = move.getCell();
+        selectedCell.setPlayer(currPlayer);
+        selectedCell.setCellState(CellState.OCCUPIED);
+        //maintain prev moves
+        moves.add(move);
+        //update nextPlayerIndex
+        nextPlayerIndex = (nextPlayerIndex + 1) % players.size();
+
+        //check winner
+        if (checkWinner(move)) {
+            setGameState(GameState.ENDED);
+        } else if (moves.size() == (board.getDimension() * board.getDimension())) {
+            setGameState(GameState.DRAW);
+        }
+    }
+
+
+    //Builder class
+    public static class GameBuilder {
         private List<Player> players;
         private int dimension;
         List<WinningStrategy> winningStrategies;
@@ -118,12 +147,12 @@ public class Game {
             int botCount = 0;
             int playerCount = 0;
 
-            for(Player player: players){
+            for (Player player : players) {
                 playerCount++;
-                if(player.getPlayerType().equals(PlayerType.BOT)) botCount++;
+                if (player.getPlayerType().equals(PlayerType.BOT)) botCount++;
             }
-            if(playerCount >= dimension) throw new InvalidPlayerCountException("Player Count should be less than N-1");
-            if(botCount > 1) throw new InvalidBotCountException("Bot count should be less than 2");
+            if (playerCount >= dimension) throw new InvalidPlayerCountException("Player Count should be less than N-1");
+            if (botCount > 1) throw new InvalidBotCountException("Bot count should be less than 2");
         }
 
         private void validate() throws InvalidBotCountException, InvalidPlayerCountException {

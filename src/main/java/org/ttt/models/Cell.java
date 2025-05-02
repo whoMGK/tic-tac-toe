@@ -10,6 +10,7 @@ public class Cell {
         this.row = row;
         this.column = column;
         this.cellState = cellState;
+        this.player = null;
     }
 
     public int getRow() {

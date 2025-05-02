@@ -4,10 +4,10 @@ import org.ttt.controllers.GameController;
 import org.ttt.exceptions.InvalidBotCountException;
 import org.ttt.exceptions.InvalidPlayerCountException;
 import org.ttt.models.*;
-import org.ttt.winningStrategies.ColumnWinningStrategy;
-import org.ttt.winningStrategies.DiagonalWinningStrategy;
-import org.ttt.winningStrategies.RowWinningStrategy;
-import org.ttt.winningStrategies.WinningStrategy;
+import org.ttt.strategies.winningStrategies.ColumnWinningStrategy;
+import org.ttt.strategies.winningStrategies.DiagonalWinningStrategy;
+import org.ttt.strategies.winningStrategies.RowWinningStrategy;
+import org.ttt.strategies.winningStrategies.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class Main {
         Game game = gameController.startGame(dimension, players, winningStrategies, nextPlayerIndex);
 
         while(game.getGameState().equals(GameState.IN_PROGRESS)){
-            
+            System.out.println("in while");
         }
     }
 }
