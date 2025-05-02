@@ -20,7 +20,7 @@ public class Main {
         // to see how IntelliJ IDEA suggests fixing it.
         int dimension = 3;
         List<Player> players = new ArrayList<>();
-        players.add(new Player("p1",1,new Symbol('x'), PlayerType.HUMAN));
+        players.add(new Player("p1", 1, new Symbol('x'), PlayerType.HUMAN));
         players.add(new Player("p2", 2, new Symbol('O'), PlayerType.HUMAN));
         List<WinningStrategy> winningStrategies = List.of(new RowWinningStrategy(), new ColumnWinningStrategy(), new DiagonalWinningStrategy());
 
@@ -29,8 +29,12 @@ public class Main {
         GameController gameController = new GameController();
         Game game = gameController.startGame(dimension, players, winningStrategies, nextPlayerIndex);
 
-        while(game.getGameState().equals(GameState.IN_PROGRESS)){
-            System.out.println("in while");
+        while (game.getGameState().equals(GameState.IN_PROGRESS)) {
+            gameController.printBoard(game);
+            gameController.makeMove(game);
         }
+        gameController.printBoard(game);
+        System.out.println("Winner: " + gameController.getWinner(game).getName());
+
     }
 }

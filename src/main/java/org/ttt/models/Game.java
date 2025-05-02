@@ -107,15 +107,15 @@ public class Game {
         selectedCell.setCellState(CellState.OCCUPIED);
         //maintain prev moves
         moves.add(move);
-        //update nextPlayerIndex
-        nextPlayerIndex = (nextPlayerIndex + 1) % players.size();
-
         //check winner
         if (checkWinner(move)) {
             setGameState(GameState.ENDED);
+            winner = currPlayer;
         } else if (moves.size() == (board.getDimension() * board.getDimension())) {
             setGameState(GameState.DRAW);
         }
+        //update nextPlayerIndex
+        nextPlayerIndex = (nextPlayerIndex + 1) % players.size();
     }
 
 

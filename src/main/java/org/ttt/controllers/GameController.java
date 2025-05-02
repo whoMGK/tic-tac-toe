@@ -19,12 +19,12 @@ public class GameController {
                 .build();
     }
 
-    public Player getWinner() {
-        return null;
+    public Player getWinner(Game game) {
+        return game.getWinner();
     }
 
-    public void print() {
-
+    public void printBoard(Game game) {
+        game.getBoard().printBoard();
     }
 
     public void makeMove(Game game) {
