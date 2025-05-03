@@ -98,15 +98,19 @@ public class Game {
     public void makeMove() {
         //get current player
         Player currPlayer = players.get(nextPlayerIndex);
-        System.out.println("Current Player: " + currPlayer.getName());
+        System.out.println("Current Player: " + currPlayer.getName() + "  Symbol: " + currPlayer.getSymbol().getSymbolChar());
+
         //make a move
         Move move = currPlayer.makeMove(board);
-        //mark cell
         Cell selectedCell = move.getCell();
+
+        //mark cell
         selectedCell.setPlayer(currPlayer);
         selectedCell.setCellState(CellState.OCCUPIED);
+
         //maintain prev moves
         moves.add(move);
+
         //check winner
         if (checkWinner(move)) {
             setGameState(GameState.ENDED);
@@ -114,6 +118,7 @@ public class Game {
         } else if (moves.size() == (board.getDimension() * board.getDimension())) {
             setGameState(GameState.DRAW);
         }
+
         //update nextPlayerIndex
         nextPlayerIndex = (nextPlayerIndex + 1) % players.size();
     }

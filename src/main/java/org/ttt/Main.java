@@ -20,7 +20,7 @@ public class Main {
         // to see how IntelliJ IDEA suggests fixing it.
         int dimension = 3;
         List<Player> players = new ArrayList<>();
-        players.add(new Player("p1", 1, new Symbol('x'), PlayerType.HUMAN));
+        players.add(new Player("p1", 1, new Symbol('X'), PlayerType.HUMAN));
         players.add(new Player("p2", 2, new Symbol('O'), PlayerType.HUMAN));
         List<WinningStrategy> winningStrategies = List.of(new RowWinningStrategy(), new ColumnWinningStrategy(), new DiagonalWinningStrategy());
 

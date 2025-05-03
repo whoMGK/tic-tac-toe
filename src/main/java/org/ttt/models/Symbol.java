@@ -1,17 +1,17 @@
 package org.ttt.models;
 
 public class Symbol {
-    private char symbol;
+    private char symbolChar;
 
     public Symbol(char symbol) {
-        this.symbol = symbol;
+        this.symbolChar = symbol;
     }
 
-    public char getSymbol() {
-        return symbol;
+    public char getSymbolChar() {
+        return symbolChar;
     }
 
     public void setSymbol(char symbol) {
-        this.symbol = symbol;
+        this.symbolChar = symbol;
     }
 }
