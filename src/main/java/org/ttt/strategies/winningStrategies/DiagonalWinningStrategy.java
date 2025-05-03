@@ -39,6 +39,14 @@ public class DiagonalWinningStrategy implements WinningStrategy {
 
     @Override
     public void handleUndo(Board board, Move move) {
-
+        int row = move.getCell().getRow();
+        int column = move.getCell().getColumn();
+        Symbol symbol = move.getPlayer().getSymbol();
+        if (row == column) {
+            leftDiagonal.put(symbol, leftDiagonal.get(symbol) - 1);
+        }
+        if (row - column == board.getDimension() - 1) {
+            rightDiagonal.put(symbol, rightDiagonal.get(symbol) - 1);
+        }
     }
 }

@@ -22,6 +22,8 @@ public class RowWinningStrategy implements WinningStrategy {
 
     @Override
     public void handleUndo(Board board, Move move) {
-
+        int row = move.getCell().getRow();
+        Symbol symbol = move.getPlayer().getSymbol();
+        rowMap.get(symbol).put(row, rowMap.get(symbol).get(row) - 1);
     }
 }

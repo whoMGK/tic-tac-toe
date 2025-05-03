@@ -31,8 +31,8 @@ public class GameController {
         game.makeMove();
     }
 
-    public void undo() {
-
+    public void undo(Game game) {
+        game.undo();
     }
 
 }

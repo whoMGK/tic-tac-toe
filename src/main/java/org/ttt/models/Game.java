@@ -83,10 +83,6 @@ public class Game {
         this.winningStrategies = winningStrategies;
     }
 
-    public static GameBuilder getGameBuilder() {
-        return new GameBuilder();
-    }
-
     //to-do
     public boolean checkWinner(Move move) {
         for (WinningStrategy winningStrategy : winningStrategies) {
@@ -123,6 +119,28 @@ public class Game {
         nextPlayerIndex = (nextPlayerIndex + 1) % players.size();
     }
 
+    public void undo() {
+        if (moves.isEmpty()) {
+            System.out.println("No more moves to undo");
+            return;
+        }
+        Move lastMove = moves.get(moves.size() - 1);
+        moves.remove(lastMove);
+
+        Cell lastCell = lastMove.getCell();
+        lastCell.setCellState(CellState.EMPTY);
+        lastCell.setPlayer(null);
+
+        for (WinningStrategy winningStrategy : winningStrategies) {
+            winningStrategy.handleUndo(board, lastMove);
+        }
+
+        nextPlayerIndex = ((nextPlayerIndex - 1) + players.size()) % players.size();
+    }
+
+    public static GameBuilder getGameBuilder() {
+        return new GameBuilder();
+    }
 
     //Builder class
     public static class GameBuilder {

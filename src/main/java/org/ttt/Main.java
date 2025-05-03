@@ -10,7 +10,9 @@ import org.ttt.strategies.winningStrategies.RowWinningStrategy;
 import org.ttt.strategies.winningStrategies.WinningStrategy;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -23,18 +25,30 @@ public class Main {
         players.add(new Player("p1", 1, new Symbol('X'), PlayerType.HUMAN));
         players.add(new Player("p2", 2, new Symbol('O'), PlayerType.HUMAN));
         List<WinningStrategy> winningStrategies = List.of(new RowWinningStrategy(), new ColumnWinningStrategy(), new DiagonalWinningStrategy());
-
+        Scanner scanner = new Scanner(System.in);
         int nextPlayerIndex = 1;
 
         GameController gameController = new GameController();
         Game game = gameController.startGame(dimension, players, winningStrategies, nextPlayerIndex);
-
+        gameController.printBoard(game);
         while (game.getGameState().equals(GameState.IN_PROGRESS)) {
-            gameController.printBoard(game);
             gameController.makeMove(game);
+            gameController.printBoard(game);
+            //Undo
+            System.out.println("Do you want to undo? (y/n): ");
+            String answer = scanner.nextLine().trim();
+            if (answer.equalsIgnoreCase("y")) {
+                gameController.undo(game);
+                gameController.printBoard(game);
+            }
         }
         gameController.printBoard(game);
-        System.out.println("Winner: " + gameController.getWinner(game).getName());
+        Player winner = gameController.getWinner(game);
+        if (winner != null) {
+            System.out.println("Winner: " + gameController.getWinner(game).getName());
+        } else {
+            System.out.println("Game ended in a draw");
+        }
 
     }
 }
